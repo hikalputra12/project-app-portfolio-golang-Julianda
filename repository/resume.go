@@ -11,7 +11,8 @@ type ResumeRepository struct {
 }
 type ResumeRepositoryInterface interface {
 	Education() ([]model.Education, error)
-	Experience() ([]model.Education, error)
+	Experience() ([]model.Experience, error)
+	Skill() ([]model.Skill, error)
 }
 
 // constructor

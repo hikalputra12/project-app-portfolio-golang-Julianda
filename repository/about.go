@@ -10,8 +10,7 @@ type AboutRepository struct {
 	db database.PgxIface
 }
 type AboutRepositoryInterface interface {
-	Biodata() (*model.Biodata, error)
-	About() (*model.Biodata, error)
+	About() (*model.About, error)
 }
 
 // constructor
@@ -21,7 +20,7 @@ func NewAboutRepository(db database.PgxIface) AboutRepository {
 	}
 }
 
-func (r *BiodataRepository) About() (*model.About, error) {
+func (r *AboutRepository) About() (*model.About, error) {
 	query := `SELECT about FROM biodata;`
 
 	var s model.About

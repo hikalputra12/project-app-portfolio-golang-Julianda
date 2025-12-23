@@ -10,17 +10,17 @@ type BiodataService struct {
 }
 
 type BiodataServiceInterface interface {
-	Biodata() (*model.Biodata, error)
+	GetBiodata() (*model.Biodata, error)
 }
 
 // constructor
-func NewBiodataRepository(repo repository.BiodataRepositoryInterface) BiodataService {
+func NewBiodataService(repo repository.BiodataRepositoryInterface) BiodataService {
 	return BiodataService{
 		Repo: repo,
 	}
 }
 
-func (s *BiodataService) Biodata() (*model.Biodata, error) {
+func (s *BiodataService) GetBiodata() (*model.Biodata, error) {
 	biodata, err := s.Repo.Biodata()
 	if err != nil {
 		return nil, err

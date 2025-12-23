@@ -11,7 +11,7 @@ type MessageRepository struct {
 	db database.PgxIface
 }
 type MessageRepositoryInterface interface {
-	CreateMessage(message *model.Message) (*model.Message, error)
+	CreateMessage(message *model.Message) error
 }
 
 // constructor
@@ -21,7 +21,7 @@ func NewMessageRepository(db database.PgxIface) MessageRepository {
 	}
 }
 
-func (r *MessageRepository) CreateMessage(message *model.Message) (*model.Message, error) {
+func (r *MessageRepository) CreateMessage(message *model.Message) error {
 	query := `INSERT INTO message (full_name, email, message, created_at) 
 	          VALUES ($1, $2, $3, $4) RETURNING id`
 
@@ -37,6 +37,6 @@ func (r *MessageRepository) CreateMessage(message *model.Message) (*model.Messag
 		return err
 	}
 
-	template.CreatedAt = now
+	message.CreatedAt = now
 	return nil
 }
