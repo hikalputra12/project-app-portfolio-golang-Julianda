@@ -7,7 +7,3 @@ type Biodata struct {
 	Email      string
 	Phone      int
 }
-
-type About struct {
-	About string
-}

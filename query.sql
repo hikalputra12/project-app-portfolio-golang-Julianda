@@ -4,16 +4,14 @@
    Digunakan di Hero & About Section
    ========================================================= */
 SELECT
-    id,
-    user_id,
     full_name,
     title,
     about,
     address,
-    profile_image,
-    cv_url
+    phone,
+    email,
 FROM biodata
-WHERE user_id = $1;
+
 
 
 /* =========================================================
