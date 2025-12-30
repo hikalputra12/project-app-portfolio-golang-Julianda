@@ -20,7 +20,7 @@ func NewMessageService(repo repository.MessageRepositoryInterface) MessageServic
 	}
 }
 
-func (s *MessageService) CreateMessage(message *model.Message) error {
+func (s *MessageService) CreateNewMessage(message *model.Message) error {
 	err := s.Repo.CreateMessage(message)
 	if err != nil {
 		return err

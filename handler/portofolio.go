@@ -25,11 +25,8 @@ func (h *PortofolioHandler) GetPortofolio(w http.ResponseWriter, r *http.Request
 		fmt.Println("Error dari servoce:", err)
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
-	//set header
 	w.Header().Set("Content-Type", "text/html; charset=utf-8")
-	//eksekusi templatenya
-	if err := h.Templates.ExecuteTemplate(w, "Portofolio", portofolio); err != nil {
-		//cek error
+	if err := h.Templates.ExecuteTemplate(w, "portofolio", portofolio); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
 }

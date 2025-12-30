@@ -21,11 +21,12 @@ func NewAboutRepository(db database.PgxIface) AboutRepository {
 }
 
 func (r *AboutRepository) About() (*model.About, error) {
-	query := `SELECT about FROM biodata;`
+	query := `SELECT intro, focus FROM about;`
 
 	var s model.About
 	err := r.db.QueryRow(context.Background(), query).Scan(
-		&s.About,
+		&s.IntroAbout,
+		&s.FocusAbout,
 	)
 	if err != nil {
 		return nil, err

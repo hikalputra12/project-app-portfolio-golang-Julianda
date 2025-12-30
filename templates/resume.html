@@ -1,0 +1,19 @@
+{{ define "resume" }}
+{{ template "base" .}}
+<section id="resume">
+    <div class="reveal">
+        <h2 class="section-title">Where I've Been</h2>
+        {{ range .}}
+        <div style="max-width: 700px;">
+            <div class="resume-item">
+                <h3 style="margin-bottom: 5px;">{{ .Title }}</h3>
+                <span class="resume-date">{{ .Periode }}</span>
+                <p><em>{{ .Organization }}</em></p>
+                <p style="margin-top: 10px; font-size: 0.95rem;">{{ .Description }}</p>
+            </div>
+        </div>
+        {{ end }}
+    </div>
+</section>
+   {{ template "footer" .}}
+{{ end }}

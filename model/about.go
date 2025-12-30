@@ -1,5 +1,11 @@
 package model
 
 type About struct {
-	About string
+	IntroAbout string
+	FocusAbout string
+}
+
+type AboutPageData struct {
+	IntroData *About
+	SkillData []Skill
 }

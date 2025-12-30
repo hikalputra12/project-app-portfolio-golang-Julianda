@@ -1,0 +1,20 @@
+ {{define "navigation"}}
+ <header>
+        <nav>
+            <div class="logo" onclick="window.location.href='/'">&lt;Portofolio /&gt;</div>
+            <ul class="nav-links">
+                <li><a href="/">Home</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a href="/portofolio">Portfolio</a></li>
+                <li><a href="/resume">Resume</a></li>
+                <li><a href="/contact">Contact</a></li>
+            </ul>
+            <div class="burger">
+                <div class="line1"></div>
+                <div class="line2"></div>
+                <div class="line3"></div>
+            </div>
+        </nav>
+    </header>
+ {{ template "footer" .}}
+{{ end }}

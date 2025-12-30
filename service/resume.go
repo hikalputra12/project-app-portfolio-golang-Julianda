@@ -10,9 +10,7 @@ type ResumeService struct {
 }
 
 type ResumeServiceInterface interface {
-	GetEducation() ([]model.Education, error)
-	GetExperience() ([]model.Experience, error)
-	GetSkill() ([]model.Skill, error)
+	GetResume() ([]model.Resume, error)
 }
 
 // constructor
@@ -22,26 +20,10 @@ func NewResumeService(repo repository.ResumeRepositoryInterface) ResumeService {
 	}
 }
 
-func (s *ResumeService) GetEducation() ([]model.Education, error) {
-	educations, err := s.Repo.Education()
+func (s *ResumeService) GetResume() ([]model.Resume, error) {
+	Resumes, err := s.Repo.Resume()
 	if err != nil {
 		return nil, err
 	}
-	return educations, nil
-}
-
-func (s *ResumeService) GetExperience() ([]model.Experience, error) {
-	experiences, err := s.Repo.Experience()
-	if err != nil {
-		return nil, err
-	}
-	return experiences, nil
-}
-
-func (s *ResumeService) GetSkill() ([]model.Skill, error) {
-	skills, err := s.Repo.Skill()
-	if err != nil {
-		return nil, err
-	}
-	return skills, nil
+	return Resumes, nil
 }

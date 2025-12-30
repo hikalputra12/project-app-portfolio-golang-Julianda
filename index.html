@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio | Cyber Security & Go Developer</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;700&family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- CSS VARIABLES & THEME --- */
+        :root {
+            --bg-color: #0a192f;       /* Dark Navy */
+            --light-bg: #112240;       /* Lighter Navy for Cards */
+            --text-primary: #ccd6f6;   /* White-ish */
+            --text-secondary: #8892b0; /* Grey-ish */
+            --accent: #64ffda;         /* Neon Cyan (Warna Khas Tech/CyberSec) */
+            --transition: all 0.25s cubic-bezier(0.645, 0.045, 0.355, 1);
+        }
+
+        /* --- RESET & BASIC SETUP --- */
+        html {
+            scroll-behavior: smooth; /* Smooth scroll antar section */
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden; 
+        }
+
+        a { text-decoration: none; color: inherit; transition: var(--transition); }
+        ul { list-style: none; }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: var(--bg-color); }
+        ::-webkit-scrollbar-thumb { background: #495670; border-radius: 5px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+
+        /* --- NAVIGATION BAR --- */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: rgba(10, 25, 47, 0.85); 
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            box-shadow: 0 10px 30px -10px rgba(2,12,27,0.7);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-family: 'Fira Code', monospace;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent);
+            border: 2px solid var(--accent);
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .logo:hover { background-color: rgba(100, 255, 218, 0.1); }
+
+        .nav-links { display: flex; gap: 2rem; }
+        .nav-links li { counter-increment: item 1; } 
+
+        .nav-links li a {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9rem;
+            color: var(--text-primary);
+        }
+
+        .nav-links li a::before {
+            content: "0" counter(item) ".";
+            color: var(--accent);
+            margin-right: 5px;
+        }
+
+        .nav-links li a:hover { color: var(--accent); }
+
+        /* Hamburger Menu (Mobile) */
+        .burger { display: none; cursor: pointer; }
+        .burger div { width: 25px; height: 3px; background-color: var(--accent); margin: 5px; transition: 0.3s; }
+
+        /* --- SECTIONS GENERAL --- */
+        section {
+            padding: 150px 5% 100px;
+            min-height: 100vh;
+            max-width: 1000px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        /* Typography Headers */
+        h1, h2, h3 { color: var(--text-primary); margin-bottom: 20px; }
+
+        h2.section-title {
+            display: flex;
+            align-items: center;
+            font-size: 2rem;
+            white-space: nowrap;
+        }
+
+        h2.section-title::before {
+            counter-increment: section 1;
+            content: "0" counter(section) ".";
+            margin-right: 10px;
+            color: var(--accent);
+            font-family: 'Fira Code', monospace;
+            font-size: 1.5rem;
+            font-weight: 400;
+        }
+
+        h2.section-title::after {
+            content: "";
+            display: block;
+            width: 300px;
+            height: 1px;
+            background-color: #233554;
+            margin-left: 20px;
+        }
+
+        /* --- ANIMATION CLASS --- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 1s ease;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- HOME SECTION --- */
+        .hero-sub {
+            font-family: 'Fira Code', monospace;
+            color: var(--accent);
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+        }
+
+        .hero-text {
+            font-size: 4rem;
+            font-weight: 800;
+            line-height: 1.1;
+            color: #e6f1ff;
+        }
+
+        .hero-desc {
+            margin-top: 20px;
+            max-width: 500px;
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+        }
+
+        .cta-btn {
+            display: inline-block;
+            margin-top: 50px;
+            padding: 1.25rem 1.75rem;
+            color: var(--accent);
+            background-color: transparent;
+            border: 1px solid var(--accent);
+            border-radius: 4px;
+            font-family: 'Fira Code', monospace;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .cta-btn:hover {
+            background-color: rgba(100, 255, 218, 0.1);
+            box-shadow: 0 0 15px rgba(100, 255, 218, 0.3);
+        }
+
+        /* cursor typing */
+        .cursor {
+            display: inline-block;
+            width: 3px;
+            background-color: var(--accent);
+            animation: blink 1s infinite;
+        }
+        @keyframes blink { 0% { opacity: 0; } 50% { opacity: 1; } 100% { opacity: 0; } }
+
+        /* --- CARDS (Portfolio & Resume) --- */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 50px;
+        }
+
+        .card {
+            background-color: var(--light-bg);
+            padding: 2rem;
+            border-radius: 8px;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 30px -15px rgba(2,12,27,0.7);
+            border-bottom: 2px solid var(--accent);
+        }
+
+        .card h3 { font-size: 1.4rem; color: #e6f1ff; }
+        .card p { color: var(--text-secondary); font-size: 1rem; margin-bottom: 1rem; }
+
+        .card-tech-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-top: auto;
+        }
+        
+        /* Resume Specific */
+        .resume-item {
+            border-left: 2px solid var(--accent);
+            padding-left: 20px;
+            margin-bottom: 30px;
+        }
+        .resume-date { font-family: 'Fira Code', monospace; font-size: 0.9rem; color: var(--accent); margin-bottom: 5px; display: inline-block;}
+
+        /* --- FORM --- */
+        form { max-width: 600px; display: flex; flex-direction: column; }
+        
+        input, textarea {
+            width: 100%;
+            padding: 15px;
+            background-color: var(--light-bg);
+            border: 1px solid #233554;
+            color: var(--text-primary);
+            border-radius: 4px;
+            margin-bottom: 20px;
+            font-family: inherit;
+            transition: var(--transition);
+        }
+
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 10px rgba(100, 255, 218, 0.2);
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: var(--text-secondary);
+            font-family: 'Fira Code', monospace;
+            font-size: 0.8rem;
+            margin-bottom: 20px;
+        }
+
+        /* --- RESPONSIVE --- */
+        @media screen and (max-width: 768px) {
+            .nav-links {
+                position: absolute;
+                right: 0;
+                height: 100vh;
+                top: 0;
+                background-color: #112240;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                width: 70%;
+                transform: translateX(100%);
+                transition: transform 0.3s ease-in-out;
+                box-shadow: -10px 0px 30px -15px rgba(2,12,27,0.7);
+                z-index: 999;
+            }
+            .burger { display: block; z-index: 2000; }
+            .nav-active { transform: translateX(0%); }
+            
+            .hero-text { font-size: 2.5rem; }
+            section { padding: 100px 20px; }
+            h2.section-title::after { width: 100px; }
+        }
+
+        /* Burger Animation class */
+        .toggle .line1 { transform: rotate(-45deg) translate(-5px, 6px); }
+        .toggle .line2 { opacity: 0; }
+        .toggle .line3 { transform: rotate(45deg) translate(-5px, -6px); }
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav>
+            <div class="logo" onclick="window.scrollTo(0,0)">&lt;DevGo /&gt;</div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#portfolio">Portfolio</a></li>
+                <li><a href="#resume">Resume</a></li>
+                <li><a href="#message">Contact</a></li>
+            </ul>
+            <div class="burger">
+                <div class="line1"></div>
+                <div class="line2"></div>
+                <div class="line3"></div>
+            </div>
+        </nav>
+    </header>
+
+    <section id="home">
+        <div class="reveal active">
+            <p class="hero-sub">Hi, my name is</p>
+            <h1 class="hero-text">Your Name.</h1>
+            <h2 class="hero-text" style="color: var(--text-secondary); font-size: 3rem;">
+                <span id="typing-text"></span><span class="cursor">|</span>
+            </h2>
+            
+            <p class="hero-desc">
+                Saya adalah mahasiswa Matematika yang berfokus pada 
+                <span style="color: var(--accent)">Cyber Security</span> dan 
+                <span style="color: var(--accent)">Software Engineering</span>.
+                Membangun sistem yang aman, terukur, dan efisien menggunakan Go.
+            </p>
+            
+            <a href="#portfolio" class="cta-btn">Check my work!</a>
+        </div>
+    </section>
+
+    <section id="about">
+        <div class="reveal">
+            <h2 class="section-title">About Me</h2>
+            <div style="display: grid; grid-template-columns: 3fr 2fr; gap: 50px; align-items: start;">
+                <div class="about-content">
+                    <p>Halo! Saya tertarik pada bagaimana sebuah sistem bekerja di balik layar, mulai dari algoritma matematika hingga keamanan jaringan.</p>
+                    <br>
+                    <p>Fokus utama saya saat ini adalah mengembangkan aplikasi backend menggunakan <strong>Golang</strong> dan mendalami teknik <strong>Penetration Testing</strong>.</p>
+                    <br>
+                    <p>Berikut adalah beberapa teknologi yang sering saya gunakan:</p>
+                    <ul style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 20px; font-family: 'Fira Code', monospace; font-size: 0.9rem;">
+                        <li style="color: var(--accent);">▹ Go (Golang)</li>
+                        <li style="color: var(--accent);">▹ Python</li>
+                        <li style="color: var(--accent);">▹ PostgreSQL</li>
+                        <li style="color: var(--accent);">▹ Docker</li>
+                        <li style="color: var(--accent);">▹ Linux (Fedora)</li>
+                        <li style="color: var(--accent);">▹ HTML & CSS</li>
+                    </ul>
+                </div>
+                <div class="about-img" style="position: relative;">
+                    <div style="width: 100%; height: 300px; background-color: var(--accent); border-radius: 4px; mix-blend-mode: multiply; opacity: 0.7;"></div>
+                    <div style="position: absolute; top: 20px; left: 20px; width: 100%; height: 300px; border: 2px solid var(--accent); border-radius: 4px; z-index: -1;"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="portfolio">
+        <div class="reveal">
+            <h2 class="section-title">Some Things I've Built</h2>
+            <div class="grid-container">
+                <div class="card">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#64ffda" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+                        <a href="#" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ccd6f6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg></a>
+                    </div>
+                    <h3>REST API Service</h3>
+                    <p>Layanan backend berkinerja tinggi menggunakan Gin Framework. Mendukung otentikasi JWT dan manajemen database PostgreSQL.</p>
+                    <div class="card-tech-list">
+                        <span>Go</span> <span>Gin</span> <span>Postgres</span> <span>Docker</span>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#64ffda" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+                        <a href="#" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ccd6f6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg></a>
+                    </div>
+                    <h3>CyberSec Scanner</h3>
+                    <p>Script Python otomatis untuk memindai kerentanan jaringan sederhana dan membuat laporan log.</p>
+                    <div class="card-tech-list">
+                        <span>Python</span> <span>Bash</span> <span>Networking</span>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#64ffda" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+                        <a href="#" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ccd6f6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg></a>
+                    </div>
+                    <h3>Personal Portfolio</h3>
+                    <p>Website portofolio yang responsif dengan tema Cyberpunk, dibangun tanpa framework CSS.</p>
+                    <div class="card-tech-list">
+                        <span>HTML</span> <span>CSS</span> <span>JS</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="resume">
+        <div class="reveal">
+            <h2 class="section-title">Where I've Been</h2>
+            <div style="max-width: 700px;">
+                <div class="resume-item">
+                    <h3 style="margin-bottom: 5px;">Backend Developer Intern</h3>
+                    <span class="resume-date">Jan 2023 - Present</span>
+                    <p><em>Tech Startup Inc.</em></p>
+                    <ul style="margin-top: 10px; font-size: 0.95rem;">
+                        <li>• Mengembangkan dan memelihara kode backend menggunakan Go.</li>
+                        <li>• Berkolaborasi dengan tim frontend untuk integrasi API.</li>
+                    </ul>
+                </div>
+                
+                <div class="resume-item">
+                    <h3 style="margin-bottom: 5px;">Mahasiswa Matematika</h3>
+                    <span class="resume-date">2020 - 2024</span>
+                    <p><em>Universitas Negeri</em></p>
+                    <ul style="margin-top: 10px; font-size: 0.95rem;">
+                        <li>• Fokus studi: Kriptografi dan Komputasi.</li>
+                        <li>• Aktif dalam komunitas Cyber Security kampus.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="message">
+        <div class="reveal" style="text-align: center; max-width: 600px; margin: 0 auto;">
+            <p style="color: var(--accent); font-family: 'Fira Code', monospace; margin-bottom: 20px;">04. What's Next?</p>
+            <h2 style="font-size: 3rem; margin-bottom: 20px;">Get In Touch</h2>
+            <p style="color: var(--text-secondary); margin-bottom: 50px;">
+                Saya sedang mencari peluang baru dalam bidang Backend Development atau Security. 
+                Apakah Anda punya pertanyaan atau sekadar ingin menyapa? Kotak masuk saya selalu terbuka!
+            </p>
+            
+            <form style="text-align: left;">
+                <input type="text" placeholder="Nama Anda" required>
+                <input type="email" placeholder="Email Anda" required>
+                <textarea rows="5" placeholder="Pesan Anda..." required></textarea>
+                <button type="submit" class="cta-btn" style="width: 100%; text-align: center;">Kirim Pesan</button>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <p>Designed & Built with <span style="color: var(--accent)">Go</span> logic & Love.</p>
+        <p style="margin-top: 5px;">&copy; 2024 Your Name.</p>
+    </footer>
+
+    <script>
+        // 1. Mobile Navigation
+        const navSlide = () => {
+            const burger = document.querySelector('.burger');
+            const nav = document.querySelector('.nav-links');
+            const navLinks = document.querySelectorAll('.nav-links li');
+
+            burger.addEventListener('click', () => {
+                nav.classList.toggle('nav-active');
+                burger.classList.toggle('toggle');
+            });
+            
+            // Tutup menu saat link diklik
+            navLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    nav.classList.remove('nav-active');
+                    burger.classList.remove('toggle');
+                });
+            });
+        }
+
+        // 2. Scroll Reveal Animation
+        const scrollReveal = () => {
+            const reveals = document.querySelectorAll('.reveal');
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            reveals.forEach((element) => {
+                observer.observe(element);
+            });
+        }
+
+        // 3. Typing Effect
+        const typeWriter = (text, elementId, speed) => {
+            let i = 0;
+            const element = document.getElementById(elementId);
+            if (!element) return;
+            
+            element.innerHTML = "";
+            const type = () => {
+                if (i < text.length) {
+                    element.innerHTML += text.charAt(i);
+                    i++;
+                    setTimeout(type, speed);
+                }
+            };
+            type();
+        }
+
+        // Init
+        document.addEventListener('DOMContentLoaded', () => {
+            navSlide();
+            scrollReveal();
+            // Efek ketik teks
+            typeWriter("I build things for the web.", "typing-text", 100);
+        });
+    </script>
+</body>
+</html>

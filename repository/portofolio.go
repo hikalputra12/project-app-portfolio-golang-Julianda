@@ -21,12 +21,7 @@ func NewPortofolioRepository(db database.PgxIface) PortofolioRepository {
 }
 
 func (r *PortofolioRepository) Portofolio() ([]model.Portofolio, error) {
-	query := `SELECT 	title, 
-	slug,
-	description,
-	thumbnail,
-	tech_stack,
-	github_url FROM projects`
+	query := `SELECT title, description, tech_stack, github_url FROM projects`
 
 	var Portofolio []model.Portofolio
 	rows, err := r.db.Query(context.Background(), query)
@@ -38,9 +33,7 @@ func (r *PortofolioRepository) Portofolio() ([]model.Portofolio, error) {
 		var s model.Portofolio
 		err := rows.Scan(
 			&s.Title,
-			&s.Slug,
 			&s.Description,
-			&s.Github_url,
 			&s.Tech_stack,
 			&s.Github_url,
 		)

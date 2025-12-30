@@ -19,47 +19,14 @@ func NewResumeHandler(serviceResume service.ResumeServiceInterface, template *te
 	}
 }
 
-func (h *ResumeHandler) GetEducation(w http.ResponseWriter, r *http.Request) {
-	Resume, err := h.ServiceResume.GetEducation()
+func (h *ResumeHandler) GetResume(w http.ResponseWriter, r *http.Request) {
+	Resume, err := h.ServiceResume.GetResume()
 	if err != nil {
 		fmt.Println("Error dari servoce:", err)
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
-	//set header
 	w.Header().Set("Content-Type", "text/html; charset=utf-8")
-	//eksekusi templatenya
-	if err := h.Templates.ExecuteTemplate(w, "Resume", Resume); err != nil {
-		//cek error
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-	}
-}
-
-func (h *ResumeHandler) GetExperience(w http.ResponseWriter, r *http.Request) {
-	Resume, err := h.ServiceResume.GetExperience()
-	if err != nil {
-		fmt.Println("Error dari servoce:", err)
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-	}
-	//set header
-	w.Header().Set("Content-Type", "text/html; charset=utf-8")
-	//eksekusi templatenya
-	if err := h.Templates.ExecuteTemplate(w, "Resume", Resume); err != nil {
-		//cek error
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-	}
-}
-
-func (h *ResumeHandler) GetSkill(w http.ResponseWriter, r *http.Request) {
-	Resume, err := h.ServiceResume.GetSkill()
-	if err != nil {
-		fmt.Println("Error dari servoce:", err)
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-	}
-	//set header
-	w.Header().Set("Content-Type", "text/html; charset=utf-8")
-	//eksekusi templatenya
-	if err := h.Templates.ExecuteTemplate(w, "Resume", Resume); err != nil {
-		//cek error
+	if err := h.Templates.ExecuteTemplate(w, "resume", Resume); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
 }

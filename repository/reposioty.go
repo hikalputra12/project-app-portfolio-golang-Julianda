@@ -8,14 +8,16 @@ type Repository struct {
 	Resume     ResumeRepository
 	Portofolio PortofolioRepository
 	Message    MessageRepository
+	Skill      SkillRepository
 }
 
-func NewReository(db database.PgxIface) Repository {
+func NewRepository(db database.PgxIface) Repository {
 	return Repository{
 		Biodata:    NewBiodataRepository(db),
 		About:      NewAboutRepository(db),
 		Resume:     NewResumeRepository(db),
 		Portofolio: NewPortofolioRepository(db),
 		Message:    NewMessageRepository(db),
+		Skill:      NewSkillRepository(db),
 	}
 }

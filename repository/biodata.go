@@ -21,15 +21,12 @@ func NewBiodataRepository(db database.PgxIface) BiodataRepository {
 }
 
 func (r *BiodataRepository) Biodata() (*model.Biodata, error) {
-	query := `SELECT full_name,title,address,phone,email FROM biodata;`
+	query := `SELECT full_name, biodata FROM biodata;`
 
 	var s model.Biodata
 	err := r.db.QueryRow(context.Background(), query).Scan(
 		&s.Name,
-		&s.Address,
-		&s.Profession,
-		&s.Email,
-		&s.Phone,
+		&s.Biodata,
 	)
 	if err != nil {
 		return nil, err

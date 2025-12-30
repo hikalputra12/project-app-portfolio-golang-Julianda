@@ -22,8 +22,8 @@ func NewMessageRepository(db database.PgxIface) MessageRepository {
 }
 
 func (r *MessageRepository) CreateMessage(message *model.Message) error {
-	query := `INSERT INTO message (full_name, email, message, created_at) 
-	          VALUES ($1, $2, $3, $4) RETURNING id`
+	query := `INSERT INTO message (full_name, email, message, created_at)
+	          VALUES ($1, $2, $3, $4) RETURNING message_id`
 
 	now := time.Now()
 	err := r.db.QueryRow(context.Background(), query,
