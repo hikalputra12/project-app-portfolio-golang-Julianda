@@ -4,19 +4,23 @@ import (
 	"context"
 	"project-portofolio/database"
 	"project-portofolio/model"
+
+	"go.uber.org/zap"
 )
 
 type SkillRepository struct {
-	db database.PgxIface
+	db     database.PgxIface
+	Logger *zap.Logger
 }
 type SkillRepositoryInterface interface {
 	Skill() ([]model.Skill, error)
 }
 
 // constructor
-func NewSkillRepository(db database.PgxIface) SkillRepository {
+func NewSkillRepository(db database.PgxIface, logger *zap.Logger) SkillRepository {
 	return SkillRepository{
-		db: db,
+		db:     db,
+		Logger: logger,
 	}
 }
 
@@ -26,6 +30,7 @@ func (r *SkillRepository) Skill() ([]model.Skill, error) {
 	var skill []model.Skill
 	rows, err := r.db.Query(context.Background(), query)
 	if err != nil {
+		r.Logger.Error("error query message repo ", zap.Error(err))
 		return nil, err
 	}
 

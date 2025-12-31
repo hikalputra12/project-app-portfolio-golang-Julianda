@@ -4,19 +4,23 @@ import (
 	"context"
 	"project-portofolio/database"
 	"project-portofolio/model"
+
+	"go.uber.org/zap"
 )
 
 type PortofolioRepository struct {
-	db database.PgxIface
+	db     database.PgxIface
+	Logger *zap.Logger
 }
 type PortofolioRepositoryInterface interface {
 	Portofolio() ([]model.Portofolio, error)
 }
 
 // constructor
-func NewPortofolioRepository(db database.PgxIface) PortofolioRepository {
+func NewPortofolioRepository(db database.PgxIface, logger *zap.Logger) PortofolioRepository {
 	return PortofolioRepository{
-		db: db,
+		db:     db,
+		Logger: logger,
 	}
 }
 
@@ -26,6 +30,7 @@ func (r *PortofolioRepository) Portofolio() ([]model.Portofolio, error) {
 	var Portofolio []model.Portofolio
 	rows, err := r.db.Query(context.Background(), query)
 	if err != nil {
+		r.Logger.Error("error query message repo ", zap.Error(err))
 		return nil, err
 	}
 

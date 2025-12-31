@@ -10,6 +10,7 @@ import (
 	"project-portofolio/repository"
 	"project-portofolio/router"
 	"project-portofolio/service"
+	"project-portofolio/utils"
 )
 
 func main() {
@@ -22,7 +23,8 @@ func main() {
 		fmt.Println("template:", t.Name())
 	}
 
-	repo := repository.NewRepository(db)
+	logger, err := utils.InitLogger("./logs/app-", true)
+	repo := repository.NewRepository(db, logger)
 	service := service.NewService(repo)
 	handler := handler.NewHandler(service, templates)
 	r := router.NewRouter(handler)

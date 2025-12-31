@@ -4,19 +4,23 @@ import (
 	"context"
 	"project-portofolio/database"
 	"project-portofolio/model"
+
+	"go.uber.org/zap"
 )
 
 type AboutRepository struct {
-	db database.PgxIface
+	db     database.PgxIface
+	Logger *zap.Logger
 }
 type AboutRepositoryInterface interface {
 	About() (*model.About, error)
 }
 
 // constructor
-func NewAboutRepository(db database.PgxIface) AboutRepository {
+func NewAboutRepository(db database.PgxIface, logger *zap.Logger) AboutRepository {
 	return AboutRepository{
-		db: db,
+		db:     db,
+		Logger: logger,
 	}
 }
 
@@ -29,6 +33,7 @@ func (r *AboutRepository) About() (*model.About, error) {
 		&s.FocusAbout,
 	)
 	if err != nil {
+		r.Logger.Error("error query about repo ", zap.Error(err))
 		return nil, err
 	}
 

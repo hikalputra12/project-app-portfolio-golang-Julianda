@@ -5,19 +5,23 @@ import (
 	"project-portofolio/database"
 	"project-portofolio/model"
 	"time"
+
+	"go.uber.org/zap"
 )
 
 type MessageRepository struct {
-	db database.PgxIface
+	db     database.PgxIface
+	Logger *zap.Logger
 }
 type MessageRepositoryInterface interface {
 	CreateMessage(message *model.Message) error
 }
 
 // constructor
-func NewMessageRepository(db database.PgxIface) MessageRepository {
+func NewMessageRepository(db database.PgxIface, logger *zap.Logger) MessageRepository {
 	return MessageRepository{
-		db: db,
+		db:     db,
+		Logger: logger,
 	}
 }
 
@@ -34,6 +38,7 @@ func (r *MessageRepository) CreateMessage(message *model.Message) error {
 	).Scan(&message.ID)
 
 	if err != nil {
+		r.Logger.Error("error query message repo ", zap.Error(err))
 		return err
 	}
 

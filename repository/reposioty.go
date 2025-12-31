@@ -1,6 +1,10 @@
 package repository
 
-import "project-portofolio/database"
+import (
+	"project-portofolio/database"
+
+	"go.uber.org/zap"
+)
 
 type Repository struct {
 	Biodata    BiodataRepository
@@ -11,13 +15,13 @@ type Repository struct {
 	Skill      SkillRepository
 }
 
-func NewRepository(db database.PgxIface) Repository {
+func NewRepository(db database.PgxIface, logger *zap.Logger) Repository {
 	return Repository{
-		Biodata:    NewBiodataRepository(db),
-		About:      NewAboutRepository(db),
-		Resume:     NewResumeRepository(db),
-		Portofolio: NewPortofolioRepository(db),
-		Message:    NewMessageRepository(db),
-		Skill:      NewSkillRepository(db),
+		Biodata:    NewBiodataRepository(db, logger),
+		About:      NewAboutRepository(db, logger),
+		Resume:     NewResumeRepository(db, logger),
+		Portofolio: NewPortofolioRepository(db, logger),
+		Message:    NewMessageRepository(db, logger),
+		Skill:      NewSkillRepository(db, logger),
 	}
 }
