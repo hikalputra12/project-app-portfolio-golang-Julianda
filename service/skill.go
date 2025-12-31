@@ -3,10 +3,13 @@ package service
 import (
 	"project-portofolio/model"
 	"project-portofolio/repository"
+
+	"go.uber.org/zap"
 )
 
 type SkillService struct {
-	Repo repository.SkillRepositoryInterface
+	Repo   repository.SkillRepositoryInterface
+	Logger *zap.Logger
 }
 
 type SkillServiceInterface interface {
@@ -14,15 +17,17 @@ type SkillServiceInterface interface {
 }
 
 // constructor
-func NewSkillService(repo repository.SkillRepositoryInterface) SkillService {
+func NewSkillService(repo repository.SkillRepositoryInterface, logger *zap.Logger) SkillService {
 	return SkillService{
-		Repo: repo,
+		Repo:   repo,
+		Logger: logger,
 	}
 }
 
 func (s *SkillService) GetSkill() ([]model.Skill, error) {
 	skills, err := s.Repo.Skill()
 	if err != nil {
+		s.Logger.Error("error  GetSkill service ", zap.Error(err))
 		return nil, err
 	}
 	return skills, nil

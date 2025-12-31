@@ -1,0 +1,2 @@
+2025-12-31T12:58:18.527+0800	INFO	middleware/logging.go:21	HTTP Request	{"method": "GET", "path": "/portofolio", "duration": "2.317013ms"}
+2025-12-31T12:58:20.172+0800	INFO	middleware/logging.go:21	HTTP Request	{"method": "GET", "path": "/", "duration": "944.97µs"}

@@ -3,6 +3,8 @@ package handler
 import (
 	"html/template"
 	"project-portofolio/service"
+
+	"go.uber.org/zap"
 )
 
 type Handler struct {
@@ -13,12 +15,12 @@ type Handler struct {
 	MessageHandler    MessageHandler
 }
 
-func NewHandler(service service.Service, template *template.Template) Handler {
+func NewHandler(service service.Service, template *template.Template, logger *zap.Logger) Handler {
 	return Handler{
-		BiodataHandler:    NewBiodataHandler(&service.Biodata, template),
-		AboutHandler:      NewAboutHandler(&service.About, &service.Skill, template),
-		ResumeHandler:     NewResumeHandler(&service.Resume, template),
-		PortofolioHandler: NewPortofolioHandler(&service.Portofolio, template),
-		MessageHandler:    NewMessageHandler(&service.Message, template),
+		BiodataHandler:    NewBiodataHandler(&service.Biodata, template, logger),
+		AboutHandler:      NewAboutHandler(&service.About, &service.Skill, template, logger),
+		ResumeHandler:     NewResumeHandler(&service.Resume, template, logger),
+		PortofolioHandler: NewPortofolioHandler(&service.Portofolio, template, logger),
+		MessageHandler:    NewMessageHandler(&service.Message, template, logger),
 	}
 }

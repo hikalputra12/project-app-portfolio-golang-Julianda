@@ -1,28 +1,31 @@
 package handler
 
 import (
-	"fmt"
 	"html/template"
 	"net/http"
 	"project-portofolio/service"
+
+	"go.uber.org/zap"
 )
 
 type BiodataHandler struct {
 	ServiceBiodata service.BiodataServiceInterface
 	Templates      *template.Template
+	Logger         *zap.Logger
 }
 
-func NewBiodataHandler(serviceBiodata service.BiodataServiceInterface, template *template.Template) BiodataHandler {
+func NewBiodataHandler(serviceBiodata service.BiodataServiceInterface, template *template.Template, logger *zap.Logger) BiodataHandler {
 	return BiodataHandler{
 		ServiceBiodata: serviceBiodata,
 		Templates:      template,
+		Logger:         logger,
 	}
 }
 
 func (h *BiodataHandler) GetBiodata(w http.ResponseWriter, r *http.Request) {
 	biodata, err := h.ServiceBiodata.GetBiodata()
 	if err != nil {
-		fmt.Println("Error dari service:", err)
+		h.Logger.Error("error  GetBiodata handler ", zap.Error(err))
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
 	w.Header().Set("Content-Type", "text/html; charset=utf-8")

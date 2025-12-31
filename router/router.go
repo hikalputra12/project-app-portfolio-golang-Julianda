@@ -3,12 +3,16 @@ package router
 import (
 	"net/http"
 	"project-portofolio/handler"
+	"project-portofolio/middleware"
 
 	"github.com/go-chi/chi/v5"
+	"go.uber.org/zap"
 )
 
-func NewRouter(h handler.Handler) *chi.Mux {
+func NewRouter(h handler.Handler, log *zap.Logger) *chi.Mux {
 	r := chi.NewRouter()
+	//penggunaan logger
+	r.Use(middleware.Logging(log))
 
 	r.Group(func(r chi.Router) {
 		r.Get("/", h.BiodataHandler.GetBiodata)

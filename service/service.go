@@ -1,6 +1,10 @@
 package service
 
-import "project-portofolio/repository"
+import (
+	"project-portofolio/repository"
+
+	"go.uber.org/zap"
+)
 
 type Service struct {
 	Biodata    BiodataService
@@ -11,13 +15,13 @@ type Service struct {
 	Skill      SkillService
 }
 
-func NewService(repo repository.Repository) Service {
+func NewService(repo repository.Repository, logger *zap.Logger) Service {
 	return Service{
-		Biodata:    NewBiodataService(&repo.Biodata),
-		About:      NewAboutService(&repo.About),
-		Resume:     NewResumeService(&repo.Resume),
-		Portofolio: NewPortofolioService(&repo.Portofolio),
-		Message:    NewMessageService(&repo.Message),
-		Skill:      NewSkillService(&repo.Skill),
+		Biodata:    NewBiodataService(&repo.Biodata, logger),
+		About:      NewAboutService(&repo.About, logger),
+		Resume:     NewResumeService(&repo.Resume, logger),
+		Portofolio: NewPortofolioService(&repo.Portofolio, logger),
+		Message:    NewMessageService(&repo.Message, logger),
+		Skill:      NewSkillService(&repo.Skill, logger),
 	}
 }

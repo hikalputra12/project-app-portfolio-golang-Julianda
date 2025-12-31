@@ -3,10 +3,13 @@ package service
 import (
 	"project-portofolio/model"
 	"project-portofolio/repository"
+
+	"go.uber.org/zap"
 )
 
 type BiodataService struct {
-	Repo repository.BiodataRepositoryInterface
+	Repo   repository.BiodataRepositoryInterface
+	Logger *zap.Logger
 }
 
 type BiodataServiceInterface interface {
@@ -14,15 +17,17 @@ type BiodataServiceInterface interface {
 }
 
 // constructor
-func NewBiodataService(repo repository.BiodataRepositoryInterface) BiodataService {
+func NewBiodataService(repo repository.BiodataRepositoryInterface, logger *zap.Logger) BiodataService {
 	return BiodataService{
-		Repo: repo,
+		Repo:   repo,
+		Logger: logger,
 	}
 }
 
 func (s *BiodataService) GetBiodata() (*model.Biodata, error) {
 	biodata, err := s.Repo.Biodata()
 	if err != nil {
+		s.Logger.Error("error  GetBiodata service ", zap.Error(err))
 		return nil, err
 	}
 	return biodata, nil

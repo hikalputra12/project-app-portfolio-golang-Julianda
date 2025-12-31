@@ -1,28 +1,31 @@
 package handler
 
 import (
-	"fmt"
 	"html/template"
 	"net/http"
 	"project-portofolio/service"
+
+	"go.uber.org/zap"
 )
 
 type PortofolioHandler struct {
 	ServicePortofolio service.PortofolioServiceInterface
 	Templates         *template.Template
+	Logger            *zap.Logger
 }
 
-func NewPortofolioHandler(servicePortofolio service.PortofolioServiceInterface, template *template.Template) PortofolioHandler {
+func NewPortofolioHandler(servicePortofolio service.PortofolioServiceInterface, template *template.Template, logger *zap.Logger) PortofolioHandler {
 	return PortofolioHandler{
 		ServicePortofolio: servicePortofolio,
 		Templates:         template,
+		Logger:            logger,
 	}
 }
 
 func (h *PortofolioHandler) GetPortofolio(w http.ResponseWriter, r *http.Request) {
 	portofolio, err := h.ServicePortofolio.GetPortofolio()
 	if err != nil {
-		fmt.Println("Error dari servoce:", err)
+		h.Logger.Error("error  GetPortofolio handler ", zap.Error(err))
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
 	w.Header().Set("Content-Type", "text/html; charset=utf-8")

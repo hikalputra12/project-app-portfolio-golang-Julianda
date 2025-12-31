@@ -5,17 +5,21 @@ import (
 	"net/http"
 	"project-portofolio/model"
 	"project-portofolio/service"
+
+	"go.uber.org/zap"
 )
 
 type MessageHandler struct {
 	MessageService service.MessageServiceInterface
 	Template       *template.Template
+	Logger         *zap.Logger
 }
 
-func NewMessageHandler(messageService service.MessageServiceInterface, template *template.Template) MessageHandler {
+func NewMessageHandler(messageService service.MessageServiceInterface, template *template.Template, logger *zap.Logger) MessageHandler {
 	return MessageHandler{
 		MessageService: messageService,
 		Template:       template,
+		Logger:         logger,
 	}
 }
 
@@ -56,6 +60,7 @@ func (h *MessageHandler) PostMessage(w http.ResponseWriter, r *http.Request) {
 	err := h.MessageService.CreateNewMessage(&newMessage)
 
 	if err != nil {
+		h.Logger.Error("error  CreateMessage handler ", zap.Error(err))
 		http.Error(w, "Gagal menyimpan pesan: "+err.Error(), http.StatusInternalServerError)
 		return
 	}

@@ -25,9 +25,9 @@ func main() {
 
 	logger, err := utils.InitLogger("./logs/app-", true)
 	repo := repository.NewRepository(db, logger)
-	service := service.NewService(repo)
-	handler := handler.NewHandler(service, templates)
-	r := router.NewRouter(handler)
+	service := service.NewService(repo, logger)
+	handler := handler.NewHandler(service, templates, logger)
+	r := router.NewRouter(handler, logger)
 
 	fmt.Println("server running on port 8080")
 	if err := http.ListenAndServe(":8080", r); err != nil {
